@@ -1,4 +1,4 @@
-# folder_structure
+# Folder Structure
 
 A new Flutter project.
 
