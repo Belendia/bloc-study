@@ -1,8 +1,10 @@
+import 'package:blocstudy/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../logic/cubit/counter_cubit.dart';
-import 'package:blocstudy/presentation/screens/second_screen.dart';
+import '../../logic/cubit/internet_cubit.dart';
+import '../../logic/cubit/internet_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title, required this.color})
@@ -30,6 +32,34 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            BlocBuilder<InternetCubit, InternetState>(
+              builder: (context, state) {
+                if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.wifi) {
+                  return const Text(
+                    'WiFi',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 25,
+                    ),
+                  );
+                } else if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.wifi) {
+                  return const Text('Mobile',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 25,
+                      ));
+                } else if (state is InternetDisconnected) {
+                  return const Text('Disconnected',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 25,
+                      ));
+                }
+                return const CircularProgressIndicator();
+              },
+            ),
             const Text(
               'You have pushed the button this many times:',
             ),

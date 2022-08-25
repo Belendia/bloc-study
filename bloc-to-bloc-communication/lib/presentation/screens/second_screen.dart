@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../logic/cubit/counter_cubit.dart';
-import 'package:blocstudy/presentation/screens/second_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.title, required this.color})
+class SecondScreen extends StatefulWidget {
+  const SecondScreen({Key? key, required this.title, required this.color})
       : super(key: key);
 
   final String title;
   final Color color;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SecondScreen> createState() => _SecondScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,15 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 24),
             MaterialButton(
-              color: widget.color,
-              onPressed: () {
-                Navigator.of(context).pushNamed('/second');
-              },
-              child: const Text('Go To Second Screen'),
-            )
+                color: widget.color,
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/third');
+                },
+                child: const Text('Go To Third Screen'))
           ],
         ),
       ),
+
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
