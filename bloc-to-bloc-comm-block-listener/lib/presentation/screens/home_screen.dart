@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             state.connectionType == ConnectionType.wifi) {
           BlocProvider.of<CounterCubit>(context).increment();
         } else if (state is InternetConnected &&
-            state.connectionType == ConnectionType.wifi) {
+            state.connectionType == ConnectionType.mobile) {
           BlocProvider.of<CounterCubit>(context).decrement();
         }
       },

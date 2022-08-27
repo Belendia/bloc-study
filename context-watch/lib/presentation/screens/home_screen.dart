@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        backgroundColor: widget.color,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -60,6 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 return const CircularProgressIndicator();
               },
             ),
+            const Divider(
+              height: 5,
+            ),
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -85,6 +89,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Text(
                   state.counterValue.toString(),
                   style: Theme.of(context).textTheme.headline4,
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+
+            // Watches counter and internet states independently and rebuilds the below widgets
+            Builder(
+              builder: (context) {
+                final counterState = context.watch<CounterCubit>().state;
+                final internetState = context.watch<InternetCubit>().state;
+
+                if (internetState is InternetConnected &&
+                    internetState.connectionType == ConnectionType.mobile) {
+                  return Text(
+                    'Counter: ${counterState.counterValue} Internet: Mobile',
+                    style: Theme.of(context).textTheme.headline6,
+                  );
+                } else if (internetState is InternetConnected &&
+                    internetState.connectionType == ConnectionType.wifi) {
+                  return Text(
+                    'Counter: ${counterState.counterValue} Internet: Wifi',
+                    style: Theme.of(context).textTheme.headline6,
+                  );
+                } else {
+                  return Text(
+                    'Counter: ${counterState.counterValue} Internet: Disconnected',
+                    style: Theme.of(context).textTheme.headline6,
+                  );
+                }
+              },
+            ),
+            //Rebuilds when counterValue changes only
+            const SizedBox(height: 24),
+            Builder(
+              builder: (context) {
+                final counterValue = context
+                    .select((CounterCubit cubit) => cubit.state.counterValue);
+                return Text(
+                  'Counter: $counterValue',
+                  style: Theme.of(context).textTheme.headline6,
                 );
               },
             ),
